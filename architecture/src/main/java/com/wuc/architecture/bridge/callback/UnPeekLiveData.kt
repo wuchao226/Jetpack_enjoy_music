@@ -8,6 +8,8 @@ import androidx.lifecycle.Observer
 /**
  * 仅分发 owner observe 后 才新拿到的数据
  * 可避免共享作用域 VM 下 liveData 被 observe 时旧数据倒灌的情况
+ *
+ * 通过反射，粘性被剔除
  */
 class UnPeekLiveData<T> : MutableLiveData<T>() {
   override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
@@ -45,7 +47,7 @@ class UnPeekLiveData<T> : MutableLiveData<T>() {
       val mVersion = liveDataClass.getDeclaredField("mVersion")
       mVersion.isAccessible = true
       val mV = mVersion[this]
-      //把当前ListData的mVersion赋值给 ObserverWrapper的field mLastVersion
+      //把当前LiveData的mVersion赋值给 ObserverWrapper的field mLastVersion
       mLastVersion[objectWrapper] = mV
       mObservers.isAccessible = false
       methodGet.isAccessible = false

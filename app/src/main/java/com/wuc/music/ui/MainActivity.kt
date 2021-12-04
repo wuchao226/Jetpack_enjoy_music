@@ -37,5 +37,10 @@ class MainActivity : BaseActivity() {
    /* mMainActivityViewModel?.openDrawer?.observe(this, {
 
     })*/
+
+    // 共享 （观察）
+    mSharedViewModel.activityCanBeClosedDirectly.observe(this, {
+      // 先不写，作用不大
+    })
   }
 }

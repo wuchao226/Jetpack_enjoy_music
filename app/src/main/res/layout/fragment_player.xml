@@ -2,7 +2,8 @@
 <layout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools">
+  xmlns:tools="http://schemas.android.com/tools"
+  xmlns:playpauseview="http://schemas.android.com/apk/res-auto">
 
   <data>
     <!-- 当我们点击的时候，我们要触发 -->
@@ -29,7 +30,7 @@
     android:layout_gravity="top">
 
     <!-- 看起来是 “播放条” 实际上 责任很大，非常重要，管控了整个 -->
-    <com.xiangxue.puremusic.ui.view.ForegroundImageView
+    <com.wuc.music.ui.view.ForegroundImageView
       android:id="@+id/album_art"
       imageUrl="@{vm.coverImg}"
       placeHolder="@{vm.placeHolder}"
@@ -84,14 +85,14 @@
     </RelativeLayout>
 
     <!-- 歌词控件 -->
-    <com.xiangxue.puremusic.ui.view.LyricView
+    <com.wuc.music.ui.view.LyricView
       android:id="@+id/lyric_view"
       android:layout_width="match_parent"
       android:layout_height="32dp"
       android:visibility="gone" />
 
     <!-- 歌手，描述，暂无歌词 等信息 -->
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/summary"
       android:layout_width="match_parent"
       android:layout_height="@dimen/sliding_up_header"
@@ -111,7 +112,7 @@
         android:progressDrawable="@drawable/progressbar_color"
         android:progressTint="?colorAccent" />
 
-      <TextView
+      <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/title"
         style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="wrap_content"
@@ -124,7 +125,7 @@
         android:textSize="16sp"
         tools:text="title" />
 
-      <TextView
+      <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/artist"
         style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
         android:layout_width="wrap_content"
@@ -138,7 +139,7 @@
         android:textSize="14sp"
         tools:text="artist" />
 
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <!-- 五个控件 -->
     <RelativeLayout
@@ -161,7 +162,7 @@
         app:materialIconColor="@android:color/black"
         app:materialIconSize="28dp" />
 
-      <com.xiangxue.puremusic.ui.view.PlayPauseView
+      <com.wuc.music.ui.view.PlayPauseView
         android:id="@+id/play_pause"
         isPlaying="@{vm.isPlaying}"
         playpauseview:circleAlpha="0"
