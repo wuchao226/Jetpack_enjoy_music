@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 展示音乐列表的适配器 的 父类
+ * @author : wuchao5
+ * @date : 2021/12/7 15:43
+ * @desciption : 展示音乐列表的适配器 的 父类
  */
 public abstract class BaseBindingAdapter<M, B extends ViewDataBinding> extends RecyclerView.Adapter {
 
@@ -53,8 +55,7 @@ public abstract class BaseBindingAdapter<M, B extends ViewDataBinding> extends R
     }
   }
 
-  protected abstract @LayoutRes
-  int getLayoutResId(int viewType);
+  protected abstract @LayoutRes int getLayoutResId(int viewType);
 
   /**
    * 注意：
@@ -67,7 +68,7 @@ public abstract class BaseBindingAdapter<M, B extends ViewDataBinding> extends R
    */
   protected abstract void onBindItem(B binding, M item, RecyclerView.ViewHolder holder);
 
-  public class BaseBindingViewHolder extends RecyclerView.ViewHolder {
+  public static class BaseBindingViewHolder extends RecyclerView.ViewHolder {
     BaseBindingViewHolder(View itemView) {
       super(itemView);
     }

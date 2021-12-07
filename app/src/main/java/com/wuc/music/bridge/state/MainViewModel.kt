@@ -14,7 +14,7 @@ class MainViewModel : ViewModel() {
   // ObservableBoolean 防止抖动，频繁改变，使用这个的场景
   // LiveData 反之
 
-  // MainFragment 初始化页面的标记 例如：“最近播放”  的记录
+  // MainFragment初始化页面的标记 初始化选项卡和页面  例如：“最近播放”  的记录
   @JvmField
   val initTabAndPage = ObservableBoolean()
 

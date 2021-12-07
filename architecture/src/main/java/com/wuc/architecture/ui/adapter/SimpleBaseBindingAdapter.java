@@ -6,7 +6,9 @@ import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * 展示音乐列表的适配器
+ * @author : wuchao5
+ * @date : 2021/12/7 15:42
+ * @desciption : 展示音乐列表的适配器
  */
 public abstract class SimpleBaseBindingAdapter<M, B extends ViewDataBinding> extends BaseBindingAdapter {
 
@@ -18,8 +20,7 @@ public abstract class SimpleBaseBindingAdapter<M, B extends ViewDataBinding> ext
   }
 
   @Override
-  protected @LayoutRes
-  int getLayoutResId(int viewType) {
+  protected @LayoutRes int getLayoutResId(int viewType) {
     return this.layout;
   }
 

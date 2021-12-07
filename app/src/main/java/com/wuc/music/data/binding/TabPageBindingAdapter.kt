@@ -12,28 +12,28 @@ import com.wuc.music.R
  * @desciption : 和fragment_player.xml里面的initTabAndPage挂钩
  */
 object TabPageBindingAdapter {
-  @JvmStatic
-  @BindingAdapter(value = ["initTabAndPage"], requireAll = false)
-  fun initTabAndPage(tabLayout: TabLayout, initTabAndPage: Boolean) {
-    if (initTabAndPage) {
-      val count = tabLayout.tabCount
-      val title = arrayOfNulls<String>(count)
-      for (i in 0 until count) {
-        val tab = tabLayout.getTabAt(i)
-        if (tab != null && tab.text != null) {
-          title[i] = tab.text.toString()
+    @JvmStatic
+    @BindingAdapter(value = ["initTabAndPage"], requireAll = false)
+    fun initTabAndPage(tabLayout: TabLayout, initTabAndPage: Boolean) {
+        if (initTabAndPage) {
+            val count = tabLayout.tabCount
+            val title = arrayOfNulls<String>(count)
+            for (i in 0 until count) {
+                val tab = tabLayout.getTabAt(i)
+                if (tab != null && tab.text != null) {
+                    title[i] = tab.text.toString()
+                }
+            }
+            val viewPager: ViewPager = tabLayout.rootView.findViewById(R.id.view_pager)
+            if (viewPager != null) {
+                viewPager.adapter = CommonViewPagerAdapter(count, false, title)
+                tabLayout.setupWithViewPager(viewPager)
+            }
         }
-      }
-      val viewPager: ViewPager = tabLayout.rootView.findViewById(R.id.view_pager)
-      if (viewPager != null) {
-        viewPager.adapter = CommonViewPagerAdapter(count, false, title)
-        tabLayout.setupWithViewPager(viewPager)
-      }
     }
-  }
 
-  @BindingAdapter(value = ["tabSelectedListener"], requireAll = false)
-  fun tabSelectedListener(tabLayout: TabLayout, listener: TabLayout.OnTabSelectedListener?) {
-    tabLayout.addOnTabSelectedListener(listener)
-  }
+    @BindingAdapter(value = ["tabSelectedListener"], requireAll = false)
+    fun tabSelectedListener(tabLayout: TabLayout, listener: TabLayout.OnTabSelectedListener?) {
+        tabLayout.addOnTabSelectedListener(listener)
+    }
 }

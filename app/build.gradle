@@ -64,5 +64,8 @@ dependencies {
   implementation 'com.github.bumptech.glide:glide:4.12.0'
   kapt 'com.github.bumptech.glide:compiler:4.12.0'
 
+  // 音乐播放控制组件
+  implementation 'com.kunminx.player:player:3.1.0'
+  implementation 'com.google.code.gson:gson:2.8.6'
 
 }
