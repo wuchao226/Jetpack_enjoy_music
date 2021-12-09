@@ -1,4 +1,4 @@
-package com.wuc.music.data.binding
+package com.wuc.music.bridge.data.binding
 
 import android.R
 import android.graphics.drawable.Drawable

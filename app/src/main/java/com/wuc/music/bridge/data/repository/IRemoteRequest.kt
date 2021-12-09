@@ -1,9 +1,9 @@
-package com.wuc.music.data.repository
+package com.wuc.music.bridge.data.repository
 
 import androidx.lifecycle.MutableLiveData
-import com.wuc.music.data.bean.DownloadFile
-import com.wuc.music.data.bean.LibraryInfo
-import com.wuc.music.data.bean.TestAlbum
+import com.wuc.music.bridge.data.bean.DownloadFile
+import com.wuc.music.bridge.data.bean.LibraryInfo
+import com.wuc.music.bridge.data.bean.TestAlbum
 
 /**
  * 远程请求标准接口（在仓库里面）

@@ -2,8 +2,8 @@
 <layout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  xmlns:playpauseview="http://schemas.android.com/apk/res-auto">
+  xmlns:playpauseview="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
     <!-- 当我们点击的时候，我们要触发 -->
@@ -165,8 +165,6 @@
       <com.wuc.music.ui.view.PlayPauseView
         android:id="@+id/play_pause"
         isPlaying="@{vm.isPlaying}"
-        playpauseview:circleAlpha="0"
-        playpauseview:isCircleDraw="true"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginEnd="16dp"
@@ -174,15 +172,15 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
-        android:onClick="@{()->click.togglePlay()}" />
+        android:onClick="@{()->click.togglePlay()}"
+        playpauseview:circleAlpha="0"
+        playpauseview:isCircleDraw="true" />
 
       <net.steamcrafted.materialiconlib.MaterialIconView
         android:id="@+id/previous"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="16dp"
-        android:layout_toStartOf="@+id/play_pause"
         android:alpha="0"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:onClick="@{()->click.previous()}"

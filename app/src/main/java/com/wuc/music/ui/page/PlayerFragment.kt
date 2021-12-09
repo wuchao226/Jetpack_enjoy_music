@@ -5,10 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import com.kunminx.player.PlayingInfoManager
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.wuc.music.R
+import com.wuc.music.bridge.player.PlayerManager
 import com.wuc.music.bridge.state.PlayerViewModel
 import com.wuc.music.databinding.FragmentPlayerBinding
 import com.wuc.music.ui.base.BaseFragment
+import com.wuc.music.ui.view.PlayerSlideListener
+import net.steamcrafted.materialiconlib.MaterialDrawableBuilder
 
 /**
  * @author : wuchao5
@@ -35,10 +40,92 @@ class PlayerFragment : BaseFragment() {
 
         // 绑定 Binding
         mBinding = FragmentPlayerBinding.bind(view)
+        // 布局控制 点击事件的
         mBinding?.click = ClickProxy()
+        // 布局控制 拖动条的
         mBinding?.event = EventHandler()
         mBinding?.vm = mPlayerViewModel
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // 观察：此字段只要发生了改变，就会 添加监听（可以弹上来的监听）
+        mSharedViewModel.timeToAddSlideListener.observe(viewLifecycleOwner, {
+
+            if (view.parent.parent is SlidingUpPanelLayout) {
+
+                val sliding = view.parent.parent as SlidingUpPanelLayout
+
+                // 添加监听（可以弹上来的监听）
+                sliding.addPanelSlideListener(PlayerSlideListener(mBinding!!, sliding))
+            }
+        })
+
+        // 我是播放条，我要去变化，我成为观察者 ---> 播放相关的类 PlayerManager
+        PlayerManager.instance.changeMusicEvent.observe(viewLifecycleOwner, { changeMusic ->
+            // 例如 ：理解 切歌的时候， 音乐的标题，作者，封面 状态等 改变
+            mPlayerViewModel!!.title.set(changeMusic.title)
+            mPlayerViewModel!!.artist.set(changeMusic.summary)
+            mPlayerViewModel!!.coverImg.set(changeMusic.img)
+        })
+
+        // 我是播放条，我要去变化，我成为观察者 -----> 播放相关的类PlayerManager
+        PlayerManager.instance.playingMusicEvent.observe(viewLifecycleOwner, { playingMusic ->
+
+            // 例如 ：理解 切歌的时候，  播放进度的改变  按钮图标的改变
+            mPlayerViewModel!!.maxSeekDuration.set(playingMusic.duration) // 总时长
+            mPlayerViewModel!!.currentSeekPosition.set(playingMusic.playerPosition) // 拖动条
+        })
+
+        // 播放/暂停是一个控件  图标的true和false
+        PlayerManager.instance.pauseEvent.observe(viewLifecycleOwner, { aBoolean ->
+            mPlayerViewModel!!.isPlaying.set(!aBoolean!!) // 播放时显示暂停，暂停时显示播放
+        })
+
+        // 列表循环，单曲循环，随机播放 模式
+        PlayerManager.instance.playModeEvent.observe(viewLifecycleOwner, { anEnum ->
+            val resultID: Int = if (anEnum === PlayingInfoManager.RepeatMode.LIST_CYCLE) { // 列表循环
+                mPlayerViewModel!!.playModeIcon.set(MaterialDrawableBuilder.IconValue.REPEAT)
+                R.string.play_repeat // 列表循环
+            } else if (anEnum === PlayingInfoManager.RepeatMode.SINGLE_CYCLE) { // 单曲循环
+                mPlayerViewModel!!.playModeIcon.set(MaterialDrawableBuilder.IconValue.REPEAT_ONCE)
+                R.string.play_repeat_once // 单曲循环
+            } else { // 随机循环
+                mPlayerViewModel!!.playModeIcon.set(MaterialDrawableBuilder.IconValue.SHUFFLE)
+                R.string.play_shuffle // 随机循环
+            }
+
+            // resultID // 成果
+
+            // 提示改变
+            if (view.parent.parent is SlidingUpPanelLayout) {
+                val sliding = view.parent.parent as SlidingUpPanelLayout
+
+                if (sliding.panelState == SlidingUpPanelLayout.PanelState.EXPANDED) { // 张开状态
+                    // 这里一定会弹出：“列表循环” or “单曲循环” or “随机播放”
+                    showShortToast(resultID)
+                }
+            }
+        })
+
+        // 可以控制 播放详情 点击/back 掉下来
+        // 例如：场景  back  要不要做什么事情
+        mSharedViewModel.closeSlidePanelIfExpanded.observe(viewLifecycleOwner, {
+            if (view.parent.parent is SlidingUpPanelLayout) {
+                val sliding = view.parent.parent as SlidingUpPanelLayout
+                // 如果是扩大，也就是，详情页面展示出来的
+                if (sliding.panelState == SlidingUpPanelLayout.PanelState.EXPANDED) {
+                    sliding.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED // 缩小了（掉下来了）
+                    mSharedViewModel.activityCanBeClosedDirectly.setValue(true) // 活动关闭的一些记录（播放条 缩小一条 与 扩大展开）
+                } else {
+                    mSharedViewModel.activityCanBeClosedDirectly.setValue(false) // 活动关闭的一些记录（播放条 缩小一条 与 扩大展开）
+                }
+            } else {
+                mSharedViewModel.activityCanBeClosedDirectly.setValue(false) // 活动关闭的一些记录（播放条 缩小一条 与 扩大展开）
+            }
+        })
+
     }
 
     /**
@@ -46,32 +133,32 @@ class PlayerFragment : BaseFragment() {
      */
     inner class ClickProxy {
 
-        /*public void playerMode() {
-            PlayerManager.getInstance().changeMode();
-        }*/
+        /* public void playerMode() {
+             PlayerManager.getInstance().changeMode();
+         }*/
 
         fun previous() {
-//            PlayerManager.instance.playPrevious()
+            PlayerManager.instance.playPrevious()
         }
 
         operator fun next() {
-//          PlayerManager.instance.playNext()
+            PlayerManager.instance.playNext()
         }
 
         // 点击缩小的
         fun slideDown() {
-//          = sharedViewModel.closeSlidePanelIfExpanded.setValue(true)
+            mSharedViewModel.closeSlidePanelIfExpanded.value = true
         }
 
-        //　更多的
+        // 更多的
         fun more() {}
 
         fun togglePlay() {
-//          = PlayerManager.instance.togglePlay()
+            PlayerManager.instance.togglePlay()
         }
 
         fun playMode() {
-//          = PlayerManager.instance.changeMode()
+            PlayerManager.instance.changeMode()
         }
 
         fun showPlayList() = showShortToast("最近播放的细节，我没有搞...")
@@ -85,9 +172,9 @@ class PlayerFragment : BaseFragment() {
         override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {}
         override fun onStartTrackingTouch(seekBar: SeekBar) {}
 
-        // 一拖动 松开手  把当前进度值 告诉PlayerManager
+        // 一拖动 松开手  把当前进度值 告诉 PlayerManager
         override fun onStopTrackingTouch(seekBar: SeekBar) {
-//        PlayerManager.instance.setSeek(seekBar.progress)
+            PlayerManager.instance.setSeek(seekBar.progress)
         }
     }
 }

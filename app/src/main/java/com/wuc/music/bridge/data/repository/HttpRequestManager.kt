@@ -1,4 +1,4 @@
-package com.wuc.music.data.repository
+package com.wuc.music.bridge.data.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -6,9 +6,9 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.wuc.architecture.utils.Utils
 import com.wuc.music.R
-import com.wuc.music.data.bean.DownloadFile
-import com.wuc.music.data.bean.LibraryInfo
-import com.wuc.music.data.bean.TestAlbum
+import com.wuc.music.bridge.data.bean.DownloadFile
+import com.wuc.music.bridge.data.bean.LibraryInfo
+import com.wuc.music.bridge.data.bean.TestAlbum
 import java.util.*
 
 /**

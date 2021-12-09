@@ -1,10 +1,10 @@
-package com.wuc.music.data.bean
+package com.wuc.music.bridge.data.bean
 
 import com.kunminx.player.bean.base.BaseAlbumItem
 import com.kunminx.player.bean.base.BaseArtistItem
 import com.kunminx.player.bean.base.BaseMusicItem
-import com.wuc.music.data.bean.TestAlbum.TestArtist
-import com.wuc.music.data.bean.TestAlbum.TestMusic
+import com.wuc.music.bridge.data.bean.TestAlbum.TestArtist
+import com.wuc.music.bridge.data.bean.TestAlbum.TestMusic
 
 /**
  * 歌曲 专辑 歌手  本身的实体Bean 对象

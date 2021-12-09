@@ -1,4 +1,4 @@
-package com.wuc.music.data.bean
+package com.wuc.music.bridge.data.bean
 
 import java.io.File
 

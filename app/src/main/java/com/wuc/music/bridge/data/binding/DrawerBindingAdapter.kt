@@ -1,4 +1,4 @@
-package com.wuc.music.data.binding
+package com.wuc.music.bridge.data.binding
 
 import androidx.core.view.GravityCompat
 import androidx.databinding.BindingAdapter

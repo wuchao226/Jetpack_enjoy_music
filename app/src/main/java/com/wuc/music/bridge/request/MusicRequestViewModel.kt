@@ -2,8 +2,8 @@ package com.wuc.music.bridge.request
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.wuc.music.data.bean.TestAlbum
-import com.wuc.music.data.repository.HttpRequestManager
+import com.wuc.music.bridge.data.bean.TestAlbum
+import com.wuc.music.bridge.data.repository.HttpRequestManager
 
 /**
  * @author : wuchao5

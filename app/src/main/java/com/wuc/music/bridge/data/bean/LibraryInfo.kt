@@ -1,4 +1,4 @@
-package com.wuc.music.data.bean
+package com.wuc.music.bridge.data.bean
 
 /**
  * 音乐描述的实体类（显示在：例如：左侧半边白色的 “享学VIP之JetPack项目”）

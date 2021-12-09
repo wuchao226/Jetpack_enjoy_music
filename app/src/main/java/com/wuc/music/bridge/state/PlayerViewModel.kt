@@ -5,8 +5,10 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.ViewModel
+import com.kunminx.player.PlayingInfoManager
 import com.wuc.architecture.utils.Utils
 import com.wuc.music.R
+import com.wuc.music.bridge.player.PlayerManager
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder
 
 /**
@@ -53,5 +55,12 @@ class PlayerViewModel : ViewModel() {
         title.set(Utils.getApp().getString(R.string.app_name)) // 默认信息
         artist.set(Utils.getApp().getString(R.string.app_name)) // 默认信息
         placeHolder.set(Utils.getApp().resources.getDrawable(R.drawable.bg_album_default)) // 默认的播放图标
+        if (PlayerManager.instance.repeatMode === PlayingInfoManager.RepeatMode.LIST_CYCLE) { // 如果等于“列表循环”
+            playModeIcon.set(MaterialDrawableBuilder.IconValue.REPEAT)
+        } else if (PlayerManager.instance.repeatMode === PlayingInfoManager.RepeatMode.SINGLE_CYCLE) { // 如果等于“单曲循环”
+            playModeIcon.set(MaterialDrawableBuilder.IconValue.REPEAT_ONCE)
+        } else {
+            playModeIcon.set(MaterialDrawableBuilder.IconValue.SHUFFLE) // 随机播放
+        }
     }
 }

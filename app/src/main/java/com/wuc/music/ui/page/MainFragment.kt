@@ -1,7 +1,7 @@
 package com.wuc.music.ui.page
 
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +13,8 @@ import com.wuc.architecture.ui.adapter.SimpleBaseBindingAdapter
 import com.wuc.music.R
 import com.wuc.music.bridge.request.MusicRequestViewModel
 import com.wuc.music.bridge.state.MainViewModel
-import com.wuc.music.data.bean.TestAlbum
+import com.wuc.music.bridge.data.bean.TestAlbum
+import com.wuc.music.bridge.player.PlayerManager
 import com.wuc.music.databinding.AdapterPlayItemBinding
 import com.wuc.music.databinding.FragmentMainBinding
 import com.wuc.music.ui.base.BaseFragment
@@ -41,6 +42,7 @@ class MainFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mMainViewModel = getFragmentViewModelProvider(this).get(MainViewModel::class.java)
+        mMusicRequestViewModel = getFragmentViewModelProvider(this).get(MusicRequestViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -62,6 +64,7 @@ class MainFragment : BaseFragment() {
         mMainViewModel?.initTabAndPage?.set(true)
 
         // 触发，---> 还要加载WebView
+
         mMainViewModel?.pageAssetPath?.set("JetPack之 WorkManager.html")
 
         // 展示数据，适配器里面的的数据 展示出来
@@ -74,17 +77,18 @@ class MainFragment : BaseFragment() {
                 Glide.with(binding?.ivCover!!.context).load(item?.coverImg).into(binding.ivCover) // 左右边的图片
 
                 // 歌曲下标记录
-                // val currentIndex = PlayerManager.instance.albumIndex // 歌曲下标记录
+                val currentIndex = PlayerManager.instance.albumIndex // 歌曲下标记录
 
                 // 播放的标记
-                /*binding.ivPlayStatus.setColor(
-                    if (currentIndex == holder ?.adapterPosition) resources.getColor(R.color.colorAccent) else Color.TRANSPARENT
-                ) // 播放的时候，右变状态图标就是红色， 如果对不上的时候，就是没有*/
+                // 播放的时候，右变状态图标就是红色， 如果对不上的时候，就是没有
+                binding.ivPlayStatus.setColor(
+                    if (currentIndex == holder?.adapterPosition) resources.getColor(R.color.my_c2) else Color.TRANSPARENT
+                )
 
                 // 点击Item
                 binding.root.setOnClickListener { v ->
                     Toast.makeText(mContext, "播放音乐", Toast.LENGTH_SHORT).show()
-                    //  PlayerManager.instance.playAudio(holder !!.adapterPosition)
+                    PlayerManager.instance.playAudio(holder!!.adapterPosition)
                 }
             }
         }
@@ -92,9 +96,9 @@ class MainFragment : BaseFragment() {
 
         // 请求数据
         // 保证我们列表没有数据（music list）
-        // if (PlayerManager.instance.album == null) {
-        mMusicRequestViewModel?.requestFreeMusics()
-        // }
+        if (PlayerManager.instance.album == null) {
+            mMusicRequestViewModel?.requestFreeMusics()
+        }
 
 
         // 眼睛 监听的变化，你只要敢变，UI就要变
@@ -108,10 +112,11 @@ class MainFragment : BaseFragment() {
                 mAdapter?.notifyDataSetChanged()
 
                 // 播放相关的业务需要这个数据
-                /*if (PlayerManager.instance.album == null ||
-                    PlayerManager.instance.album !!.albumId != musicAlbum.albumId) {
+                if (PlayerManager.instance.album == null ||
+                    PlayerManager.instance.album!!.albumId != musicAlbum.albumId
+                ) {
                     PlayerManager.instance.loadAlbum(musicAlbum)
-                }*/
+                }
             }
         })
     }

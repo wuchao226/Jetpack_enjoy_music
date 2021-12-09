@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
   xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   package="com.wuc.music">
 
   <application
@@ -21,6 +22,22 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+    <service android:name=".bridge.player.notification.PlayerService" />
+
+    <receiver
+      android:name=".bridge.player.notification.PlayerReceiver"
+      tools:ignore="ExportedReceiver"
+      android:exported="false">
+      <intent-filter>
+        <action android:name="com.wuc.music.close" />
+        <action android:name="com.wuc.music.pause" />
+        <action android:name="com.wuc.music.next" />
+        <action android:name="com.wuc.music.play" />
+        <action android:name="com.wuc.music.previous" />
+        <action android:name="android.intent.action.MEDIA_BUTTON" />
+        <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+      </intent-filter>
+    </receiver>
   </application>
 
 </manifest>

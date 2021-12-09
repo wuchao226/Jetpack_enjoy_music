@@ -1,4 +1,4 @@
-package com.wuc.music.data.repository
+package com.wuc.music.bridge.data.repository
 
 /**
  * 为了扩展，这样写（在仓库里面的）
