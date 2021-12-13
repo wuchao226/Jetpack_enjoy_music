@@ -46,7 +46,7 @@
                  就是 main 的效果，当点击 main 上面的 菜单图标的时候  跳转到 “测试搜索界面”
                  nav_main(首页界面，搜索界面)
              -->
-      <androidx.fragment.app.FragmentContainerView
+      <fragment
         android:id="@+id/main_fragment_host"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
@@ -58,7 +58,7 @@
       <!-- 底部播放条 底部播放项，非常的重要
            nav_slide（播放条播放界面）
        -->
-      <androidx.fragment.app.FragmentContainerView
+      <fragment
         android:id="@+id/slide_fragment_host"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
@@ -71,7 +71,7 @@
     <!-- 点击菜单图标后，弹出左侧的 "黑色半边框界面"
             nav_drawer（左侧的 黑色半边框界面）
         -->
-    <androidx.fragment.app.FragmentContainerView
+    <fragment
       android:id="@+id/drawer_fragment_host"
       android:name="androidx.navigation.fragment.NavHostFragment"
       android:layout_width="330dp"

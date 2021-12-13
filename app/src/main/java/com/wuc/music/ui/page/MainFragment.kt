@@ -94,6 +94,11 @@ class MainFragment : BaseFragment() {
         }
         mMainBinding?.rv?.adapter = mAdapter
 
+        // 播放相关业务的数据（如果这个数据发生了改变，为了更好的体验） 眼睛 盯着
+        PlayerManager.instance.playingMusicEvent.observe(viewLifecycleOwner, {
+            mAdapter?.notifyDataSetChanged() // 刷新适配器
+        })
+
         // 请求数据
         // 保证我们列表没有数据（music list）
         if (PlayerManager.instance.album == null) {

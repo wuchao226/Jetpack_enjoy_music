@@ -2,10 +2,12 @@ package com.wuc.music.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.wuc.music.R
+import com.wuc.music.bridge.data.config.Configs
 import com.wuc.music.bridge.state.MainActivityViewModel
 import com.wuc.music.bridge.state.MainViewModel
 import com.wuc.music.databinding.ActivityMainBinding
@@ -53,6 +55,8 @@ class MainActivity : BaseActivity() {
         // 共享 （观察）
         mSharedViewModel.activityCanBeClosedDirectly.observe(this, {
             // 先不写，作用不大
+            Log.d(Configs.TAG, if (it) "中控中心 我知道了，原来播放条被收缩了" else "中控中心 我知道了，原来播放条被展开了")
+            // ... 业务逻辑的
         })
     }
 

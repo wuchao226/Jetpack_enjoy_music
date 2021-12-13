@@ -5,7 +5,9 @@
   xmlns:playpauseview="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools">
 
+
   <data>
+
     <!-- 当我们点击的时候，我们要触发 -->
     <variable
       name="click"
@@ -29,6 +31,13 @@
     android:layout_height="match_parent"
     android:layout_gravity="top">
 
+    <!--
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{逻辑 逻辑 图片 网络请求 等等 等  .....  }"
+        />-->
+
     <!-- 看起来是 “播放条” 实际上 责任很大，非常重要，管控了整个 -->
     <com.wuc.music.ui.view.ForegroundImageView
       android:id="@+id/album_art"
@@ -38,7 +47,8 @@
       android:layout_height="@dimen/sliding_up_header"
       android:scaleType="centerCrop"
       android:src="@drawable/bg_album_default"
-      android:visibility="visible" />
+      android:visibility="visible"
+      />
 
     <!-- TODO 下面的 都属于 播放详情了 -->
     <RelativeLayout
@@ -61,10 +71,11 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:onClick="@{()->click.slideDown()}"
         android:scaleType="center"
-        android:visibility="visible"
         app:materialIcon="chevron_down"
         app:materialIconColor="@color/white"
-        app:materialIconSize="28dp" />
+        app:materialIconSize="28dp"
+        android:visibility="visible"
+        />
 
       <!-- 右手边的更多 -->
       <net.steamcrafted.materialiconlib.MaterialIconView
@@ -77,10 +88,11 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:onClick="@{()->click.more()}"
         android:scaleType="center"
-        android:visibility="visible"
         app:materialIcon="dots_vertical"
         app:materialIconColor="@color/white"
-        app:materialIconSize="28dp" />
+        app:materialIconSize="28dp"
+        android:visibility="visible"
+        />
 
     </RelativeLayout>
 
@@ -92,7 +104,7 @@
       android:visibility="gone" />
 
     <!-- 歌手，描述，暂无歌词 等信息 -->
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <LinearLayout
       android:id="@+id/summary"
       android:layout_width="match_parent"
       android:layout_height="@dimen/sliding_up_header"
@@ -112,7 +124,7 @@
         android:progressDrawable="@drawable/progressbar_color"
         android:progressTint="?colorAccent" />
 
-      <androidx.appcompat.widget.AppCompatTextView
+      <TextView
         android:id="@+id/title"
         style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="wrap_content"
@@ -125,7 +137,7 @@
         android:textSize="16sp"
         tools:text="title" />
 
-      <androidx.appcompat.widget.AppCompatTextView
+      <TextView
         android:id="@+id/artist"
         style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
         android:layout_width="wrap_content"
@@ -139,7 +151,7 @@
         android:textSize="14sp"
         tools:text="artist" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
 
     <!-- 五个控件 -->
     <RelativeLayout
@@ -181,6 +193,8 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_alignParentTop="true"
+        android:layout_marginEnd="16dp"
+        android:layout_toStartOf="@+id/play_pause"
         android:alpha="0"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:onClick="@{()->click.previous()}"
@@ -237,4 +251,5 @@
       app:onSeekBarChangeListener="@{event}" />
 
   </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </layout>

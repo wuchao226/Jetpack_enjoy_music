@@ -150,6 +150,7 @@ class PlayerFragment : BaseFragment() {
             mSharedViewModel.closeSlidePanelIfExpanded.value = true
         }
 
+
         // 更多的
         fun more() {}
 

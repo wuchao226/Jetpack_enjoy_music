@@ -9,5 +9,5 @@ object Configs {
     @JvmField
     val COVER_PATH: String = Utils.getApp().getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!.absolutePath
 
-    const val TAG = "Derry"
+    const val TAG = "wuc"
 }
