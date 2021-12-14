@@ -2,6 +2,7 @@ package com.wuc.music.ui.page
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -123,6 +124,14 @@ class MainFragment : BaseFragment() {
                     PlayerManager.instance.loadAlbum(musicAlbum)
                 }
             }
+        })
+
+        // 眼睛 观察 登录Session的变化，只要发生改变，就需要更新到界面ui中
+        mSharedViewModel.session.observe(viewLifecycleOwner, {
+            Log.d("Derry", "登录Session的变化，只要发生改变，就需要更新到界面UI中")
+
+            // 更新UI，面向ViewModel实例修改，UI就变了
+            mMainViewModel?.loginSessionInfo?.set(if (it.isLogin) "登录成功，欢迎${it.loginRegisterResponse?.username}来到此系统" else "你未登录")
         })
     }
 

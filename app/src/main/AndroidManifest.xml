@@ -4,17 +4,22 @@
   xmlns:tools="http://schemas.android.com/tools"
   package="com.wuc.music">
 
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
   <application
     android:name=".ui.MusicApplication"
     android:theme="@style/Theme.Jetpack_enjoy_music"
     android:allowBackup="true"
     android:icon="@drawable/ic_launcher"
     android:label="@string/app_name"
-    android:roundIcon="@drawable/ic_launcher"
     android:networkSecurityConfig="@xml/network_security_config"
+    android:roundIcon="@drawable/ic_launcher"
     android:supportsRtl="true">
+
     <activity
-      android:name=".ui.MainActivity"
+      android:name=".ui.LoginActivity"
       android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -22,12 +27,20 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
+    <activity
+      android:name=".ui.MainActivity"
+      android:exported="false" />
+    <activity
+      android:name=".ui.RegisterActivity"
+      android:exported="false" />
+
     <service android:name=".bridge.player.notification.PlayerService" />
 
     <receiver
       android:name=".bridge.player.notification.PlayerReceiver"
-      tools:ignore="ExportedReceiver"
-      android:exported="false">
+      android:exported="false"
+      tools:ignore="ExportedReceiver">
       <intent-filter>
         <action android:name="com.wuc.music.close" />
         <action android:name="com.wuc.music.pause" />

@@ -16,7 +16,6 @@ class PlayerReceiver : BroadcastReceiver() {
 
     // 广播接受者
     override fun onReceive(context: Context, intent: Intent) {
-
         if (intent.action == Intent.ACTION_MEDIA_BUTTON) {
             if (intent.extras == null) {
                 return

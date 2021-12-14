@@ -1,7 +1,9 @@
 package com.wuc.music.bridge.callback
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.wuc.architecture.bridge.callback.UnPeekLiveData
+import com.wuc.music.bridge.data.login_register.LoginSession
 import java.util.*
 
 /**
@@ -43,4 +45,10 @@ class SharedViewModel : ViewModel() {
      *  开启和关闭 卡片相关的状态，如果发生改变 会和 allowDrawerOpen 挂钩
      */
     val enableSwipeDrawer = UnPeekLiveData<Boolean>()
+
+
+    /**
+     * 保存登录信息的临时会话 需要贯穿整个项目，所以是共享的   UnPeekLiveData<Session>()
+     */
+    val session = MutableLiveData<LoginSession>()
 }

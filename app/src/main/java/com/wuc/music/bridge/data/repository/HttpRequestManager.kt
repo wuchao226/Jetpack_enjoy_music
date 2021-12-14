@@ -1,5 +1,6 @@
 package com.wuc.music.bridge.data.repository
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
@@ -9,6 +10,12 @@ import com.wuc.music.R
 import com.wuc.music.bridge.data.bean.DownloadFile
 import com.wuc.music.bridge.data.bean.LibraryInfo
 import com.wuc.music.bridge.data.bean.TestAlbum
+import com.wuc.music.bridge.data.login_register.LoginRegisterResponse
+import com.wuc.music.bridge.data.repository.api.WanAndroidAPI
+import com.wuc.music.bridge.data.repository.net.APIClient
+import com.wuc.music.bridge.data.repository.net.APIResponse
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 /**
@@ -89,6 +96,48 @@ class HttpRequestManager private constructor() : ILoadRequest, IRemoteRequest {
             }
         }
         timer.schedule(task, 100)
+    }
+
+    override fun register(
+        context: Context, username: String, password: String, repassword: String,
+        dataLiveDataSuccess: MutableLiveData<LoginRegisterResponse>,
+        dataLiveDataFail: MutableLiveData<String>
+    ) {
+        // RxJava封装网络模型
+        APIClient.instance.instanceRetrofit(WanAndroidAPI::class.java)
+            .registerAction(username, password, repassword)
+            .subscribeOn(Schedulers.io())// 给上面的代码分配异步线程
+            .observeOn(AndroidSchedulers.mainThread())// 给下面的代码分配 安卓的主线程
+            .subscribe(object : APIResponse<LoginRegisterResponse>(context) {
+                override fun success(data: LoginRegisterResponse?) {// RxJava自定义操作符过滤后的
+                    dataLiveDataSuccess.value = data
+                }
+
+                override fun failure(errorMsg: String?) {// RxJava自定义操作符过滤后的
+                    dataLiveDataFail.value = errorMsg
+                }
+
+            })
+    }
+
+    override fun login(
+        context: Context, username: String, password: String,
+        dataLiveDataSuccess: MutableLiveData<LoginRegisterResponse>,
+        dataLiveDataFail: MutableLiveData<String>
+    ) {
+        APIClient.instance.instanceRetrofit(WanAndroidAPI::class.java)
+            .loginAction(username, password)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object :APIResponse<LoginRegisterResponse>(context){
+                override fun success(data: LoginRegisterResponse?) {
+                    dataLiveDataSuccess.value = data
+                }
+
+                override fun failure(errorMsg: String?) {
+                    dataLiveDataFail.value = errorMsg
+                }
+            })
     }
 
     companion object {

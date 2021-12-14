@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.wuc.architecture.data.manager.NetworkStateManager
@@ -36,6 +37,15 @@ open class BaseActivity : AppCompatActivity() {
         // 意味着 BaseActivity被观察者  -----> NetworkStateManager观察者（一双眼睛 盯着看 onResume/onPause）
         // BaseActivity就是被观察者 ---> NetworkStateManager.getInstance()
         lifecycle.addObserver(NetworkStateManager.instance)
+    }
+
+    /**
+     * 暴漏给自己的孩子   隐藏ActionBar
+     */
+    fun hideActionBar() {
+        // 任何 Java代码东西，必须用 ？ 允许为null，来接收
+        val actionBar: ActionBar? = supportActionBar
+        actionBar?.hide()
     }
 
     /**
