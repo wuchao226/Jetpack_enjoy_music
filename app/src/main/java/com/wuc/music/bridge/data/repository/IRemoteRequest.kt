@@ -28,7 +28,8 @@ interface IRemoteRequest {
         password: String,
         repassword: String,
         dataLiveDataSuccess: MutableLiveData<LoginRegisterResponse>,
-        dataLiveDataFail: MutableLiveData<String>)
+        dataLiveDataFail: MutableLiveData<String>
+    )
 
     // 登录
     // 登录的标准
@@ -37,5 +38,13 @@ interface IRemoteRequest {
         username: String,
         password: String,
         dataLiveDataSuccess: MutableLiveData<LoginRegisterResponse>,
-        dataLiveDataFail: MutableLiveData<String>)
+        dataLiveDataFail: MutableLiveData<String>
+    )
+
+    // 登录的标准-协程版本
+    suspend fun loginCoroutine(
+        username: String,
+        password: String
+    )
+            : LoginRegisterResponse
 }

@@ -63,12 +63,15 @@ class LoginActivity : BaseActivity() {
                 mLoginViewModel?.loginState?.value = "用户名 或 密码 为空，请你好好检查"
                 return
             }
-
-            mRequestLoginViewModel?.requestLogin(
+            // 非协程版本
+            /*mRequestLoginViewModel?.requestLogin(
                 this@LoginActivity,
                 mLoginViewModel!!.userName.value!!,
-                mLoginViewModel!!.userPwd.value!!,
                 mLoginViewModel!!.userPwd.value!!
+            )*/
+            mRequestLoginViewModel?.requestLoginCoroutine(
+                this@LoginActivity, mLoginViewModel!!.userName.value!!,
+                mLoginViewModel!!.userPwd.value!!,
             )
         }
 

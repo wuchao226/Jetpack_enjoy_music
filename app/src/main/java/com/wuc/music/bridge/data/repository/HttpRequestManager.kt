@@ -61,7 +61,7 @@ class HttpRequestManager private constructor() : ILoadRequest, IRemoteRequest {
     }
 
     /**
-     * 搜索界面的时候讲
+     * 搜索界面
      * TODO：模拟下载任务:
      * 可分别用于 普通的请求，和可跟随页面生命周期叫停的请求，
      * 具体可见 ViewModel 和 UseCase 中的使用。
@@ -129,7 +129,7 @@ class HttpRequestManager private constructor() : ILoadRequest, IRemoteRequest {
             .loginAction(username, password)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object :APIResponse<LoginRegisterResponse>(context){
+            .subscribe(object : APIResponse<LoginRegisterResponse>(context) {
                 override fun success(data: LoginRegisterResponse?) {
                     dataLiveDataSuccess.value = data
                 }
@@ -139,6 +139,14 @@ class HttpRequestManager private constructor() : ILoadRequest, IRemoteRequest {
                 }
             })
     }
+
+    // 登录的标准-协程版本-的具体代码
+    override suspend fun loginCoroutine(
+        username: String,
+        password: String
+    ) =
+        APIClient.instance.instanceRetrofit(WanAndroidAPI::class.java)
+            .loginActionCoroutine(username, password).data
 
     companion object {
         val instance = HttpRequestManager()

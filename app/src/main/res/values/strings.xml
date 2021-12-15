@@ -1,7 +1,5 @@
 <resources>
   <string name="app_name">Jetpack_enjoy_music</string>
-  <!-- TODO: Remove or change this placeholder text -->
-  <string name="hello_blank_fragment">Hello blank fragment</string>
 
   <string name="welcome_back">欢迎回来</string>
 
@@ -27,7 +25,7 @@
   <string name="recently">我的歌曲</string>
   <string name="best_practice">其他信息</string>
 
-  <string name="app_summary">享学VIP之JetPack项目</string>
+  <string name="app_summary">JetPack项目</string>
   <string name="project_title">本项目中用到的技术点包括：</string>
   <string name="Copyright">Product with love by Xiangxue Derry @2021</string>
   <string name="search_page_tip">本页面用于测试 Navigation 路由导航</string>
@@ -35,7 +33,7 @@
   <string name="test_lifecycle_download">测试下载，离开页面即中止</string>
   <string name="search_back">右滑关闭本页面</string>
 
-  <string name="relearn_android">《享学课堂》</string>
+  <string name="relearn_android">《JetPack课堂》</string>
   <string name="learn_more_friends">JetPack头脑风暴</string>
   <string name="learn_more">Learn More</string>
 </resources>
